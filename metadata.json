@@ -1,0 +1,4 @@
+{
+  "name": "Mac LAN Controller",
+  "description": "A beautiful, Apple-style web interface to control Mac media playback via a Rust backend."
+}

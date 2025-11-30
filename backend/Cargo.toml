@@ -1,0 +1,12 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+actix-files = "0.6.9"
+actix-web = "4"
+
+[[bin]]
+name = "backend"
+path = "main.rs"
