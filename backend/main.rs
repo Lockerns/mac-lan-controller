@@ -51,7 +51,7 @@ async fn set_volume(path: web::Path<u8>) -> impl Responder {
 #[get("/api/volume/up")]
 async fn volume_up() -> impl Responder {
     // 增加10%音量
-    let script = "set volume output volume ((output volume of (get volume settings)) + 10)";
+    let script = "set volume output volume ((output volume of (get volume settings)) + 5)";
     let _ = web::block(move || {
         Command::new("osascript")
             .arg("-e")
@@ -65,7 +65,7 @@ async fn volume_up() -> impl Responder {
 #[get("/api/volume/down")]
 async fn volume_down() -> impl Responder {
     // 减少10%音量
-    let script = "set volume output volume ((output volume of (get volume settings)) - 10)";
+    let script = "set volume output volume ((output volume of (get volume settings)) - 5)";
     let _ = web::block(move || {
         Command::new("osascript")
             .arg("-e")
@@ -148,9 +148,9 @@ async fn main() -> std::io::Result<()> {
             .service(toggle)
             .service(next)
             .service(prev)
-            .service(set_volume)
             .service(volume_up)
             .service(volume_down)
+            .service(set_volume)
             .service(set_mute)
             .service(get_status)
             .service(Files::new("/", "../dist").index_file("index.html"))

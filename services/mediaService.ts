@@ -51,6 +51,8 @@ class MediaService {
       case CommandType.VOL_DOWN:
         return this.request('/api/volume/down', 'GET');
       case CommandType.SYSTEM_SLEEP:
+         console.warn(`Command ${command} not supported by current backend version.`);
+         return { success: false, message: "Not implemented in backend" };
       case CommandType.SYSTEM_DISPLAY_SLEEP:
          console.warn(`Command ${command} not supported by current backend version.`);
          return { success: false, message: "Not implemented in backend" };
