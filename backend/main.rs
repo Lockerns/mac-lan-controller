@@ -1,6 +1,7 @@
 use actix_web::{get, web, App, HttpServer, HttpResponse, Responder};
 use actix_files::Files;
 use std::process::Command;
+mod system_audio;
 
 // 1. 播放/暂停 (调用 Swift 工具)
 #[get("/api/toggle")]
@@ -110,6 +111,14 @@ async fn get_status() -> impl Responder {
             .arg("output muted of (get volume settings)")
             .output();
 
+        let system_audio_status = system_audio::SystemAudio::is_playing();
+        let mut is_playing = false;
+        if system_audio_status.is_ok() {
+            is_playing = system_audio_status.unwrap();
+        } else {
+            eprintln!("Error: {}", system_audio_status.err().unwrap());
+        }
+
         let volume = match vol_output {
             Ok(o) => String::from_utf8_lossy(&o.stdout).trim().parse::<u8>().unwrap_or(0),
             Err(_) => 0,
@@ -121,7 +130,7 @@ async fn get_status() -> impl Responder {
         };
         
         // 手动构建 JSON，避免引入 serde 依赖
-        format!("{{\"volume\": {}, \"isMuted\": {}}}", volume, is_muted)
+        format!("{{\"volume\": {}, \"isMuted\": {}, \"isPlaying\": {}}}", volume, is_muted, is_playing)
     })
     .await
     .map(|res| {
