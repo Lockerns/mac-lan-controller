@@ -1,6 +1,6 @@
 // In a real deployment, this might be dynamic or configured via env vars
 // For local development, typically http://localhost:8080
-export const API_BASE_URL = ''; 
+export const API_BASE_URL = 'http://localhost:8080'; 
 
 // Placeholder images
 export const DEFAULT_ALBUM_ART = 'https://picsum.photos/400/400';

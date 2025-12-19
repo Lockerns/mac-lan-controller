@@ -79,7 +79,8 @@ class MediaService {
         state: { 
           isConnected: true,
           volume: data.volume,
-          isMuted: data.isMuted
+          isMuted: data.isMuted,
+          isPlaying: data.isPlaying === true || String(data.isPlaying).toLowerCase() === 'true' || data.isPlaying === 1
         } 
       };
     } catch (error) {
